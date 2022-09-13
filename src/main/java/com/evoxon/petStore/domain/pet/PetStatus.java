@@ -1,4 +1,5 @@
 package com.evoxon.petStore.domain.pet;
 
-public enum PetStatus { available, pending, sold
+public enum PetStatus {
+    AVAILABLE, PENDING, SOLD
 }

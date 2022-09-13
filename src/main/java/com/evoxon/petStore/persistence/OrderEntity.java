@@ -23,6 +23,15 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
+    public OrderEntity(Long id, Long petId, int quantity, Date shipDate, OrderStatus orderStatus, boolean complete) {
+        this.id = id;
+        this.petId = petId;
+        this.quantity = quantity;
+        this.shipDate = shipDate;
+        this.orderStatus = orderStatus;
+        this.complete = complete;
+    }
+
     public OrderEntity(Long petId, int quantity, Date shipDate, OrderStatus orderStatus, boolean complete) {
         this.petId = petId;
         this.quantity = quantity;

@@ -6,19 +6,17 @@ import com.evoxon.petStore.domain.pet.PetStatus;
 import com.evoxon.petStore.persistence.PetEntity;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PetDtoTest {
 
     @Test
     void fromEntityToDomain() {
         //given
-        PetEntity petEntity = new PetEntity(1L,"Pitbull",1L,"Dog","medium dangerous male", PetStatus.available);
-        Pet petExpected = new Pet(1L,"Pitbull",new Category(1L,"Dog"), List.of("medium","dangerous","male"), PetStatus.available);
+        PetEntity petEntity = new PetEntity(1L,"Pitbull",1L,"Dog","medium dangerous male", PetStatus.AVAILABLE);
+        Pet petExpected = new Pet(1L,"Pitbull",new Category(1L,"Dog"), List.of("medium","dangerous","male"), PetStatus.AVAILABLE);
         //when
         Pet pet = PetDto.fromEntityToDomain(petEntity);
         //then
@@ -33,8 +31,8 @@ class PetDtoTest {
     @Test
     void fromDomainToEntity() {
         //given
-        Pet pet = new Pet(1L,"Pitbull",new Category(1L,"Dog"), List.of("medium","dangerous","male"), PetStatus.available);
-        PetEntity petEntityExpected = new PetEntity(1L,"Pitbull",1L,"Dog","medium dangerous male", PetStatus.available);
+        Pet pet = new Pet(1L,"Pitbull",new Category(1L,"Dog"), List.of("medium","dangerous","male"), PetStatus.AVAILABLE);
+        PetEntity petEntityExpected = new PetEntity(1L,"Pitbull",1L,"Dog","medium dangerous male", PetStatus.AVAILABLE);
         //when
         PetEntity petEntity = PetDto.fromDomainToEntity(pet);
         //then

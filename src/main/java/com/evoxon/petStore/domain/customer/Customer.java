@@ -1,19 +1,26 @@
 package com.evoxon.petStore.domain.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.management.relation.Role;
+
 public class Customer {
 
     private Long id;
     private String username;
+    @JsonIgnore
     private String password;
     private String email;
     private String address;
+    private CustomerRole customerRole;
 
-    public Customer(Long id, String username, String password, String email, String address) {
+    public Customer(Long id, String username, String password, String email, String address, CustomerRole customerRole) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
+        this.customerRole = customerRole;
     }
 
     public Long getId() {
@@ -56,6 +63,14 @@ public class Customer {
         this.address = address;
     }
 
+    public CustomerRole getCustomerRole() {
+        return customerRole;
+    }
+
+    public void setCustomerRole(CustomerRole customerRole) {
+        this.customerRole = customerRole;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -64,6 +79,7 @@ public class Customer {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", customerRole=" + customerRole +
                 '}';
     }
 }
