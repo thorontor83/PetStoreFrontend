@@ -48,5 +48,22 @@ public class CustomerService implements UserDetailsService {
 
     }
 
+    public Customer createCustomer(Customer customer) {
+        CustomerEntity customerEntity = customerRepository.saveAndFlush(CustomerDto.fromDomainToEntity(customer));
+        return CustomerDto.fromEntityToDomain(customerEntity);
+
+    }
+
+    public String deleteCustomer(String username) {
+        Optional<CustomerEntity> optionalCustomerEntityToDelete = customerRepository.findByUsername(username);
+        if (optionalCustomerEntityToDelete.isPresent()){
+            customerRepository.delete(optionalCustomerEntityToDelete.get());
+            return "Customer with username: " + username + " deleted successfully";
+        }
+        else{
+            return null;
+        }
+
+    }
 }
 

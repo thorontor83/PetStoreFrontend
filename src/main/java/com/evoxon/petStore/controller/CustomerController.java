@@ -3,10 +3,10 @@ package com.evoxon.petStore.controller;
 import com.evoxon.petStore.domain.customer.Customer;
 import com.evoxon.petStore.domain.customer.CustomerService;
 import io.swagger.oas.inflector.models.ResponseContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.Response;
 
@@ -20,17 +20,43 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping(path = "api/v1/customer/{username}")
-    public ResponseContext getCustomerByName (@PathVariable String username){
+    @GetMapping(path = "/api/v1/customer/{username}")
+    public ResponseEntity<Object> getCustomerByName (@PathVariable String username){
         if (username == null){
-            return new ResponseContext().status(Response.Status.BAD_REQUEST).entity("Invalid username supplied");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
         Customer customer = customerService.getCustomerByName(username);
         if (customer != null){
-            return new ResponseContext().status(Response.Status.OK).entity(customer);
+            return ResponseEntity.status(HttpStatus.OK).body(customer);
         }
         else{
-            return new ResponseContext().status(Response.Status.NOT_FOUND).entity("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+    @PostMapping(path = "/api/v1/customer")
+    public ResponseEntity<Object> createCustomer (@RequestBody Customer customer){
+        Customer customerCreated = customerService.createCustomer(customer);
+        if (customerCreated == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customer was not created");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(customerCreated);
+        }
+    }
+
+    @DeleteMapping(path = "/api/v1/customer/{username}")
+    public ResponseEntity<Object> deleteCustomer (@PathVariable String username){
+        if (username == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username supplied");
+        }
+        String message = customerService.deleteCustomer(username);
+        if (message == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+
         }
     }
 
