@@ -60,5 +60,15 @@ public class CustomerService implements UserDetailsService {
         }
 
     }
+
+    public Customer modifyCustomer(Customer customer) {
+        Optional<CustomerEntity> optionalCustomerEntity = customerRepository.findByUsername(customer.getUsername());
+        if (optionalCustomerEntity.isPresent()){
+            return CustomerDto.fromEntityToDomain(customerRepository.saveAndFlush(CustomerDto.fromDomainToEntity(customer)));
+        }
+        else{
+            return null;
+        }
+    }
 }
 
