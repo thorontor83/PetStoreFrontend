@@ -3,6 +3,7 @@ package com.evoxon.petStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class PetStoreApplication {
@@ -11,6 +12,9 @@ public class PetStoreApplication {
 		SpringApplication.run(PetStoreApplication.class, args);
 	}
 
-
+	@Bean
+	protected BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }

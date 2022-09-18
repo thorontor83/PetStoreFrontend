@@ -32,18 +32,13 @@ public class CustomerService implements UserDetailsService {
             Customer customer = CustomerDto.fromEntityToDomain(optionalCustomerEntity.get());
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(customer.getCustomerRole().name()));
-            return new CustomUserDetails(customer.getUsername(), customer.getPassword(), authorities, customer.getId());
+            return new CustomUserDetails(customer.getId(),customer.getUsername(), customer.getPassword(), authorities);
         }
     }
 
     public Customer getCustomerByName(String username) {
         Optional<CustomerEntity> optionalCustomerEntity = customerRepository.findByUsername(username);
-        if (optionalCustomerEntity.isPresent()){
-            return CustomerDto.fromEntityToDomain(optionalCustomerEntity.get());
-        }
-        else{
-            return null;
-        }
+        return optionalCustomerEntity.map(CustomerDto::fromEntityToDomain).orElse(null);
 
 
     }
