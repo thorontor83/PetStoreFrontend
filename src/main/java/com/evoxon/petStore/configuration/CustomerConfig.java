@@ -11,11 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.List;
 
 @Configuration
-public class CustomerCofig {
+public class CustomerConfig {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CustomerCofig(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public CustomerConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 

@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -63,6 +65,29 @@ public class CustomerController {
         }
         else{
             return ResponseEntity.status(HttpStatus.OK).body(customerCreated);
+        }
+    }
+
+    @PostMapping(path = "/api/v1/customer/createWithList")
+    public ResponseEntity<Object> createWithList (@RequestBody List<Customer> customerList){
+        List<Customer> customerListCreated = customerService.createWithList(customerList);
+        if (customerListCreated.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customers were not created");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(customerListCreated);
+        }
+    }
+
+    @PostMapping(path = "/api/v1/customer/createWithArray")
+    public ResponseEntity<Object> createWithArray (@RequestBody Customer[] customerArray){
+        List<Customer> customerList = Arrays.asList(customerArray);
+        List<Customer> customerListCreated = customerService.createWithList(customerList);
+        if (customerListCreated.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customers were not created");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(customerListCreated);
         }
     }
 

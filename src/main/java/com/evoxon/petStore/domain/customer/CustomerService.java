@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService implements UserDetailsService {
@@ -69,6 +71,15 @@ public class CustomerService implements UserDetailsService {
         else{
             return null;
         }
+    }
+
+    public List<Customer> createWithList(List<Customer> customerList) {
+        return customerList
+                .stream()
+                .map(CustomerDto::fromDomainToEntity)
+                .map(customerRepository::saveAndFlush)
+                .map(CustomerDto::fromEntityToDomain)
+                .collect(Collectors.toList());
     }
 }
 

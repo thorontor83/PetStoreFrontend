@@ -11,7 +11,16 @@ import javax.persistence.*;
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="customer_sequence",
+            sequenceName = "customer_sequence",
+            initialValue = 0,
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "customer_sequence"
+    )
     private Long id;
     private String username;
     @JsonIgnore

@@ -10,7 +10,16 @@ import java.util.List;
 @Table(name = "pets")
 public class PetEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="pet_sequence",
+            sequenceName = "pet_sequence",
+            initialValue = 0,
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "pet_sequence"
+    )
     private Long id;
     private String petName;
     private Long categoryId;
