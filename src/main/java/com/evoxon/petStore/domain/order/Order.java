@@ -20,6 +20,34 @@ public class Order {
         this.complete = complete;
     }
 
+    void approve() throws Exception {
+        if(this.orderStatus.equals(OrderStatus.PLACED) || this.orderStatus.equals(OrderStatus.APPROVED)){
+            this.orderStatus = OrderStatus.APPROVED;
+        }
+        else{
+            throw new Exception("Shipped orders cannot change Status");
+        }
+
+    }
+
+    void deliver() throws Exception {
+        if(this.orderStatus.equals(OrderStatus.DELIVERED) || this.orderStatus.equals(OrderStatus.APPROVED)){
+            this.orderStatus = OrderStatus.DELIVERED;
+        }
+        else{
+            throw new Exception("Not approved orders cannot be delivered");
+        }
+    }
+
+    void complete() throws Exception {
+        if (this.orderStatus.equals(OrderStatus.DELIVERED)){
+            this.complete = true;
+        }
+        else{
+            throw new Exception("Only delivered orders can be approved");
+        }
+    }
+
     public Long getId() {
         return id;
     }

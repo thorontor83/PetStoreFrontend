@@ -11,7 +11,16 @@ import java.util.Date;
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="order_sequence",
+            sequenceName = "order_sequence",
+            initialValue = 0,
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "order_sequence"
+    )
     private Long id;
     private Long petId;
     private int quantity;

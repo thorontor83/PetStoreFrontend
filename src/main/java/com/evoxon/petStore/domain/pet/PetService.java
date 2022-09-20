@@ -3,7 +3,6 @@ package com.evoxon.petStore.domain.pet;
 import com.evoxon.petStore.dto.PetDto;
 import com.evoxon.petStore.persistence.PetEntity;
 import com.evoxon.petStore.persistence.PetRepository;
-import net.bytebuddy.description.annotation.AnnotationList;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,12 +21,7 @@ public class PetService {
 
     public Pet getPetById(Long petId) {
         Optional<PetEntity> optionalPetEntity = petRepository.findById(petId);
-        if(optionalPetEntity.isPresent()){
-            return PetDto.fromEntityToDomain(optionalPetEntity.get());
-        }
-        else{
-            return null;
-        }
+        return optionalPetEntity.map(PetDto::fromEntityToDomain).orElse(null);
     }
 
     public Pet createPet(Pet pet) {
@@ -50,10 +44,28 @@ public class PetService {
 
     public List<Pet> getPetsByStatus(PetStatus petStatus) {
         Optional<List<PetEntity>> petEntityList = petRepository.findAllWithStatus(petStatus);
-        if(petEntityList.isPresent()){
-            return petEntityList.get().stream().map(PetDto::fromEntityToDomain).collect(Collectors.toList());
+        return petEntityList.map(petEntities -> petEntities.stream().map(PetDto::fromEntityToDomain).collect(Collectors.toList())).orElse(Collections.emptyList());
+    }
+
+    public Pet updatePet(Pet pet) {
+        Optional<PetEntity> optionalPetEntityToUpdate = petRepository.findById(pet.getId());
+        if (optionalPetEntityToUpdate.isPresent()){
+            petRepository.save(PetDto.fromDomainToEntity(pet));
+            return pet;
         }
-        else
-            return Collections.emptyList();
+        else{
+            return null;
+        }
+    }
+
+    public Boolean deletePet(Long petId) {
+        Optional<PetEntity> optionalPetEntity = petRepository.findById(petId);
+        if(optionalPetEntity.isPresent()){
+            petRepository.delete(optionalPetEntity.get());
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

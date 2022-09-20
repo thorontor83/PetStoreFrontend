@@ -33,7 +33,9 @@ public class WebSecurityConfig  {
         return http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/v1/pet*").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/store/order/*").permitAll()
+                                    .antMatchers("/api/v1/store/order*").permitAll()
+                                    .antMatchers("/api/v1/pet*").permitAll()
                                     .antMatchers(HttpMethod.GET,"/index.html").permitAll()
                                     .antMatchers(HttpMethod.GET,"/api/v1/login*").permitAll()
                                     .antMatchers(HttpMethod.POST,"/api/v1/login").permitAll()

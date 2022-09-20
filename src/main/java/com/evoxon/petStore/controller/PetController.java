@@ -4,6 +4,7 @@ import com.evoxon.petStore.domain.customer.Customer;
 import com.evoxon.petStore.domain.pet.Pet;
 import com.evoxon.petStore.domain.pet.PetService;
 import com.evoxon.petStore.domain.pet.PetStatus;
+import com.evoxon.petStore.domain.pet.PetStatusForm;
 import com.evoxon.petStore.jwt.TokenUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -51,11 +52,11 @@ public class PetController {
     }
 
     @GetMapping(path = "/api/v1/pet/findByStatus")
-    public ResponseEntity<Object> getPetsByStatus(@RequestBody PetStatus petStatus) {
+    public ResponseEntity<Object> getPetsByStatus(@RequestBody PetStatusForm petStatus) {
         if (petStatus == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet Status is not valid");
         }
-        List<Pet> petList = petService.getPetsByStatus(petStatus);
+        List<Pet> petList = petService.getPetsByStatus(petStatus.getPetStatus());
         if(petList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pets with required status");
         }
@@ -65,7 +66,7 @@ public class PetController {
     }
 
     @PostMapping(path = "/api/v1/pet")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createPet(@RequestBody Pet pet){
         if (pet == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
@@ -78,6 +79,38 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.OK).body(petCreated);
         }
     }
+
+    @PutMapping(path = "/api/v1/pet")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> updatePet(@RequestBody Pet pet){
+        if (pet == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
+        }
+        Pet petUpdated = petService.updatePet(pet);
+        if (petUpdated == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet not found");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(petUpdated);
+        }
+    }
+
+    @DeleteMapping(path = "/api/v1/pet/{petId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> deletePet(@PathVariable String petId){
+        if (petId == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
+        }
+        Long petIdToDelete = Long.parseLong(petId);
+        Boolean deleteIsValid = petService.deletePet(petIdToDelete);
+        if (deleteIsValid) {
+            return ResponseEntity.status(HttpStatus.OK).body("Pet deleted correctly");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet to delete not found");
+        }
+    }
+
 
 
 }
