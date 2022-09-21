@@ -32,11 +32,13 @@ public class WebSecurityConfig  {
 
         return http
                 .csrf().disable()
+                .headers().frameOptions().disable().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/v1/store/order/*").permitAll()
                                     .antMatchers("/api/v1/store/order*").permitAll()
                                     .antMatchers("/api/v1/pet*").permitAll()
-                                    .antMatchers(HttpMethod.GET,"/index.html").permitAll()
+                                    .antMatchers("/h2-console/*").permitAll()
+                                    .antMatchers(HttpMethod.GET,"/api/v1/index.html").permitAll()
                                     .antMatchers(HttpMethod.GET,"/api/v1/login*").permitAll()
                                     .antMatchers(HttpMethod.POST,"/api/v1/login").permitAll()
                                     .antMatchers(HttpMethod.POST,"/api/v1/logout").permitAll()
@@ -46,7 +48,7 @@ public class WebSecurityConfig  {
                                     .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
                                     .anyRequest().authenticated().and()
                 .logout()
-                .logoutSuccessUrl("/index.html")
+                .logoutSuccessUrl("/api/v1/index.html")
                 .logoutUrl("/api/v1/logout").permitAll().and()
                 .apply(customDsl()).and()
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)

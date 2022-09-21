@@ -1,9 +1,7 @@
 package com.evoxon.petStore.controller;
 
 import com.evoxon.petStore.domain.order.Order;
-import com.evoxon.petStore.domain.order.OrderService;
-import com.evoxon.petStore.domain.pet.Pet;
-import com.evoxon.petStore.persistence.PetEntity;
+import com.evoxon.petStore.domain.order.OrderServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,16 +9,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping
 public class StoreController {
 
-    final private OrderService orderService;
+    final private OrderServiceImpl orderServiceImpl;
 
-    public StoreController(OrderService orderService) {
-        this.orderService = orderService;
+    public StoreController(OrderServiceImpl orderServiceImpl) {
+        this.orderServiceImpl = orderServiceImpl;
     }
 
     @GetMapping(path = "api/v1/store/order/{orderIdString}")
@@ -29,7 +26,7 @@ public class StoreController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order's Id is not valid");
         }
         Long orderId = Long.parseLong(orderIdString);
-        Order orderToGet = orderService.getOrderById(orderId);
+        Order orderToGet = orderServiceImpl.getOrderById(orderId);
         if (orderToGet != null){
             return ResponseEntity.status(HttpStatus.OK).body(orderToGet);
         }
@@ -42,7 +39,7 @@ public class StoreController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getInventory(){
         Map<String, Integer> inventory = new HashMap<String, Integer>();
-        inventory = orderService.getInventory();
+        inventory = orderServiceImpl.getInventory();
         if(inventory.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
         }
@@ -57,7 +54,7 @@ public class StoreController {
         if (order == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order is not valid");
         }
-        Order orderCreated = orderService.createOrder(order);
+        Order orderCreated = orderServiceImpl.createOrder(order);
         if (orderCreated == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Required pet is not Available");
         } else {
@@ -72,7 +69,7 @@ public class StoreController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order's Id is not valid");
         }
         Long orderIdToDelete = Long.parseLong(orderIdString);
-        Boolean deleteIsValid = orderService.deletePet(orderIdToDelete);
+        Boolean deleteIsValid = orderServiceImpl.deleteOrder(orderIdToDelete);
         if (deleteIsValid) {
             return ResponseEntity.status(HttpStatus.OK).body("Order deleted correctly");
         }

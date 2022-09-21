@@ -1,6 +1,7 @@
 package com.evoxon.petStore.domain.customer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.management.relation.Role;
 
@@ -8,7 +9,7 @@ public class Customer {
 
     private Long id;
     private String username;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
     private String address;
@@ -19,6 +20,14 @@ public class Customer {
 
     public Customer(Long id, String username, String password, String email, String address, CustomerRole customerRole) {
         this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.address = address;
+        this.customerRole = customerRole;
+    }
+
+    public Customer(String username, String password, String email, String address, CustomerRole customerRole) {
         this.username = username;
         this.password = password;
         this.email = email;

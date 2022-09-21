@@ -5,6 +5,7 @@ import com.evoxon.petStore.domain.customer.CustomerRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customers")
@@ -22,6 +23,7 @@ public class CustomerEntity {
             generator = "customer_sequence"
     )
     private Long id;
+
     private String username;
     @JsonIgnore
     private String password;

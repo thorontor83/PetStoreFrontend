@@ -1,12 +1,8 @@
 package com.evoxon.petStore.controller;
 
-import com.evoxon.petStore.domain.customer.Customer;
 import com.evoxon.petStore.domain.pet.Pet;
-import com.evoxon.petStore.domain.pet.PetService;
-import com.evoxon.petStore.domain.pet.PetStatus;
+import com.evoxon.petStore.domain.pet.PetServiceImpl;
 import com.evoxon.petStore.domain.pet.PetStatusForm;
-import com.evoxon.petStore.jwt.TokenUtil;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,9 +14,9 @@ import java.util.List;
 @RequestMapping
 public class PetController {
 
-    private final PetService petService;
+    private final PetServiceImpl petServiceImpl;
 
-    public PetController(PetService petService) {this.petService = petService;}
+    public PetController(PetServiceImpl petServiceImpl) {this.petServiceImpl = petServiceImpl;}
 
     @GetMapping(path = "/api/v1/pet/{petIdString}")
     public ResponseEntity<Object> getPetById(@PathVariable String petIdString){
@@ -28,7 +24,7 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet's Id is not valid");
         }
         Long petId = Long.parseLong(petIdString);
-        Pet petToGet = petService.getPetById(petId);
+        Pet petToGet = petServiceImpl.getPetById(petId);
         if (petToGet != null){
             return ResponseEntity.status(HttpStatus.OK).body(petToGet);
         }
@@ -42,7 +38,7 @@ public class PetController {
         if (tagList == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("List of tags is not valid");
         }
-        List<Pet> petList = petService.getPetsByTags(tagList);
+        List<Pet> petList = petServiceImpl.getPetsByTags(tagList);
         if(petList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pets with required tags");
         }
@@ -56,7 +52,7 @@ public class PetController {
         if (petStatus == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet Status is not valid");
         }
-        List<Pet> petList = petService.getPetsByStatus(petStatus.getPetStatus());
+        List<Pet> petList = petServiceImpl.getPetsByStatus(petStatus.getPetStatus());
         if(petList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pets with required status");
         }
@@ -71,7 +67,7 @@ public class PetController {
         if (pet == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
         }
-        Pet petCreated = petService.createPet(pet);
+        Pet petCreated = petServiceImpl.createPet(pet);
         if (petCreated == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet was not created");
         }
@@ -86,7 +82,7 @@ public class PetController {
         if (pet == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
         }
-        Pet petUpdated = petService.updatePet(pet);
+        Pet petUpdated = petServiceImpl.updatePet(pet);
         if (petUpdated == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet not found");
         }
@@ -102,7 +98,7 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
         }
         Long petIdToDelete = Long.parseLong(petId);
-        Boolean deleteIsValid = petService.deletePet(petIdToDelete);
+        Boolean deleteIsValid = petServiceImpl.deletePet(petIdToDelete);
         if (deleteIsValid) {
             return ResponseEntity.status(HttpStatus.OK).body("Pet deleted correctly");
         }

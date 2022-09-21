@@ -1,16 +1,13 @@
 package com.evoxon.petStore.controller;
 
 import com.evoxon.petStore.domain.customer.Customer;
-import com.evoxon.petStore.domain.customer.CustomerService;
+import com.evoxon.petStore.domain.customer.CustomerServiceImpl;
 import com.evoxon.petStore.jwt.TokenUtil;
-import io.swagger.oas.inflector.models.ResponseContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,10 +15,10 @@ import java.util.List;
 @RequestMapping
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerServiceImpl customerServiceImpl;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerController(CustomerServiceImpl customerServiceImpl) {
+        this.customerServiceImpl = customerServiceImpl;
     }
 
     @GetMapping(path = "/api/v1/customer/{username}")
@@ -31,7 +28,7 @@ public class CustomerController {
         if (username == null || !username.equals(customer.getUsername())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
-        Customer customerToGet = customerService.getCustomerByName(username);
+        Customer customerToGet = customerServiceImpl.getCustomerByName(username);
         if (customerToGet != null){
             return ResponseEntity.status(HttpStatus.OK).body(customerToGet);
         }
@@ -47,7 +44,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
         else{
-            Customer customerModified = customerService.modifyCustomer(customerToModified);
+            Customer customerModified = customerServiceImpl.modifyCustomer(customerToModified);
             if (customerModified == null){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
@@ -59,7 +56,7 @@ public class CustomerController {
 
     @PostMapping(path = "/api/v1/customer")
     public ResponseEntity<Object> createCustomer (@RequestBody Customer customer){
-        Customer customerCreated = customerService.createCustomer(customer);
+        Customer customerCreated = customerServiceImpl.createCustomer(customer);
         if (customerCreated == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customer was not created");
         }
@@ -70,7 +67,7 @@ public class CustomerController {
 
     @PostMapping(path = "/api/v1/customer/createWithList")
     public ResponseEntity<Object> createWithList (@RequestBody List<Customer> customerList){
-        List<Customer> customerListCreated = customerService.createWithList(customerList);
+        List<Customer> customerListCreated = customerServiceImpl.createWithList(customerList);
         if (customerListCreated.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customers were not created");
         }
@@ -81,13 +78,12 @@ public class CustomerController {
 
     @PostMapping(path = "/api/v1/customer/createWithArray")
     public ResponseEntity<Object> createWithArray (@RequestBody Customer[] customerArray){
-        List<Customer> customerList = Arrays.asList(customerArray);
-        List<Customer> customerListCreated = customerService.createWithList(customerList);
-        if (customerListCreated.isEmpty()){
+        Customer[] customerArrayCreated = customerServiceImpl.createWithArray(customerArray);
+        if (customerArrayCreated.length == 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The customers were not created");
         }
         else{
-            return ResponseEntity.status(HttpStatus.OK).body(customerListCreated);
+            return ResponseEntity.status(HttpStatus.OK).body(customerArrayCreated);
         }
     }
 
@@ -97,7 +93,7 @@ public class CustomerController {
         if (username == null || !username.equals(customer.getUsername())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username supplied");
         }
-        String message = customerService.deleteCustomer(customer.getUsername());
+        String message = customerServiceImpl.deleteCustomer(customer.getUsername());
         if (message == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
         }
