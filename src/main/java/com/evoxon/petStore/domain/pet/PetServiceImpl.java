@@ -25,7 +25,7 @@ public class PetServiceImpl implements PetService{
     }
 
     public Pet createPet(Pet pet) {
-        return PetDto.fromEntityToDomain((petRepository.saveAndFlush(PetDto.fromDomainToEntity(pet))));
+        return PetDto.fromEntityToDomain((petRepository.save(PetDto.fromDomainToEntity(pet))));
     }
 
     public List<Pet> getPetsByTags(List<String> tagList) {

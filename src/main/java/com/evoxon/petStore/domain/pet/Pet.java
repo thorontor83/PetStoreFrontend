@@ -2,6 +2,7 @@ package com.evoxon.petStore.domain.pet;
 
 
 import java.util.List;
+import java.util.Objects;
 
 public class Pet {
     private Long id;
@@ -67,5 +68,19 @@ public class Pet {
                 ", tags=" + tags +
                 ", petStatus=" + petStatus +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pet)) return false;
+        Pet pet = (Pet) o;
+        return Objects.equals(id, pet.id) && Objects.equals(petName, pet.petName) && Objects.equals(category.getCategoryName(), pet.category.getCategoryName())
+                && Objects.equals(category.getId(), pet.category.getId()) && Objects.equals(tags, pet.tags) && petStatus == pet.petStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, petName, category, tags, petStatus);
     }
 }

@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements UserDetailsService, CustomerService 
     }
 
     public Customer modifyCustomer(Customer customer) {
-        Optional<CustomerEntity> optionalCustomerEntity = customerRepository.findByUsername(customer.getUsername());
+        Optional<CustomerEntity> optionalCustomerEntity = customerRepository.findById(customer.getId());
         if (optionalCustomerEntity.isPresent()){
             return CustomerDto.fromEntityToDomain(customerRepository.saveAndFlush(CustomerDto.fromDomainToEntity(customer)));
         }

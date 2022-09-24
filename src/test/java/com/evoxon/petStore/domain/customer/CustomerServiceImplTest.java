@@ -47,7 +47,7 @@ class CustomerServiceImplTest {
 
     @Test
     void shouldNotLoadUserByUsername() {
-//given
+        //given
         String username = "Julio";
         CustomerEntity customerEntity = new CustomerEntity(0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
         when(customerRepository.findByUsername("Julio")).thenReturn(Optional.empty());
@@ -129,28 +129,61 @@ class CustomerServiceImplTest {
     @Test
     void shouldModifyCustomer() {
         //given
-        Customer customer = new Customer ("Paco","5678","paco@mail.com","Tierno Galvan 4",CustomerRole.ADMIN);
+        Customer customer = new Customer (0L,"Paco","5678","paco@mail.com","Tierno Galvan 4",CustomerRole.ADMIN);
         CustomerEntity customerEntity = new CustomerEntity(0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
-        when(customerRepository.findByUsername("Julio")).thenReturn(Optional.of(customerEntity));
+        when(customerRepository.findById(0L)).thenReturn(Optional.of(customerEntity));
         when(customerRepository.saveAndFlush(any())).thenReturn(CustomerDto.fromDomainToEntity(customer));
         //when
         Customer customerToCheck = customerService.modifyCustomer(customer);
         //then
         assertThat(customerToCheck).usingRecursiveComparison().isEqualTo(customer);
+    }
+
+    @Test
+    void shouldNotModifyCustomer() {
+        //given
+        Customer customer = new Customer (0L,"Paco","5678","paco@mail.com","Tierno Galvan 4",CustomerRole.ADMIN);
+        CustomerEntity customerEntity = new CustomerEntity(0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
+        when(customerRepository.findById(0L)).thenReturn(Optional.empty());
+        //when(customerRepository.saveAndFlush(any())).thenReturn(CustomerDto.fromDomainToEntity(customer));
+        //when
+        Customer customerToCheck = customerService.modifyCustomer(customer);
+        //then
+        assertThat(customerToCheck).isNull();
 
     }
 
     @Test
     void createWithList() {
         //given
+        Customer customer1 = new Customer (0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
+        CustomerEntity customerEntity1 = CustomerDto.fromDomainToEntity(customer1);
+        Customer customer2 = new Customer (0L,"Paco","5678","paco@mail.com","Tierno Galvan 4",CustomerRole.ADMIN);
+        CustomerEntity customerEntity2 = CustomerDto.fromDomainToEntity(customer2);
+        Customer customer3 = new Customer (0L,"Juana","3456","juana@mail.com","Sacrificio 10",CustomerRole.USER);
+        CustomerEntity customerEntity3 = CustomerDto.fromDomainToEntity(customer3);
+        List<Customer> customerList = List.of(customer1,customer2,customer3);
+        when(customerRepository.saveAndFlush(any())).thenReturn(customerEntity1,customerEntity2,customerEntity3);
         //when
+        List<Customer> listToCheck = customerService.createWithList(customerList);
         //then
+        assertThat(listToCheck).usingRecursiveComparison().isEqualTo(customerList);
     }
 
     @Test
     void createWithArray() {
         //given
+        Customer customer1 = new Customer (0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
+        CustomerEntity customerEntity1 = CustomerDto.fromDomainToEntity(customer1);
+        Customer customer2 = new Customer (0L,"Paco","5678","paco@mail.com","Tierno Galvan 4",CustomerRole.ADMIN);
+        CustomerEntity customerEntity2 = CustomerDto.fromDomainToEntity(customer2);
+        Customer customer3 = new Customer (0L,"Juana","3456","juana@mail.com","Sacrificio 10",CustomerRole.USER);
+        CustomerEntity customerEntity3 = CustomerDto.fromDomainToEntity(customer3);
+        Customer[] customerArray = new Customer[]{customer1,customer2,customer3};
+        when(customerRepository.saveAndFlush(any())).thenReturn(customerEntity1,customerEntity2,customerEntity3);
         //when
+        Customer[] arrayToCheck = customerService.createWithArray(customerArray);
         //then
+        assertThat(arrayToCheck).usingRecursiveComparison().isEqualTo(customerArray);
     }
 }
