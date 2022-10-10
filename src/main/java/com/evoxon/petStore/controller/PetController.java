@@ -18,7 +18,7 @@ public class PetController {
 
     public PetController(PetServiceImpl petServiceImpl) {this.petServiceImpl = petServiceImpl;}
 
-    @GetMapping(path = "/api/v1/pet/{petIdString}")
+    @GetMapping(path = "/api/v1/pet/{petIdString}", produces = "application/json")
     public ResponseEntity<Object> getPetById(@PathVariable String petIdString){
         if (petIdString == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet's Id is not valid");
@@ -33,7 +33,7 @@ public class PetController {
         }
     }
 
-    @GetMapping(path = "/api/v1/pet/findByTags")
+    @GetMapping(path = "/api/v1/pet/findByTags", produces = "application/json")
     public ResponseEntity<Object> getPetsByTags(@RequestBody List<String> tagList) {
         if (tagList == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("List of tags is not valid");
@@ -47,7 +47,7 @@ public class PetController {
         }
     }
 
-    @GetMapping(path = "/api/v1/pet/findByStatus")
+    @GetMapping(path = "/api/v1/pet/findByStatus", produces = "application/json")
     public ResponseEntity<Object> getPetsByStatus(@RequestBody PetStatusForm petStatus) {
         if (petStatus == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet Status is not valid");
@@ -61,7 +61,7 @@ public class PetController {
         }
     }
 
-    @PostMapping(path = "/api/v1/pet")
+    @PostMapping(path = "/api/v1/pet", produces = "application/json")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createPet(@RequestBody Pet pet){
         if (pet == null){
@@ -76,7 +76,7 @@ public class PetController {
         }
     }
 
-    @PutMapping(path = "/api/v1/pet")
+    @PutMapping(path = "/api/v1/pet", produces = "application/json")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> updatePet(@RequestBody Pet pet){
         if (pet == null){
@@ -91,7 +91,7 @@ public class PetController {
         }
     }
 
-    @DeleteMapping(path = "/api/v1/pet/{petId}")
+    @DeleteMapping(path = "/api/v1/pet/{petId}", produces = "application/json")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> deletePet(@PathVariable String petId){
         if (petId == null){

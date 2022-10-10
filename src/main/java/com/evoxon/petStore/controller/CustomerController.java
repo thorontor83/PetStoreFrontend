@@ -21,7 +21,7 @@ public class CustomerController {
         this.customerServiceImpl = customerServiceImpl;
     }
 
-    @GetMapping(path = "/api/v1/customer/{username}")
+    @GetMapping(path = "/api/v1/customer/{username}", produces = "application/json")
     public ResponseEntity<Object> getCustomerByName (@PathVariable String username, @RequestHeader HttpHeaders httpHeaders){
         Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
 
@@ -38,7 +38,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping(path = "/api/v1/customer/{username}")
+    @PutMapping(path = "/api/v1/customer/{username}", produces = "application/json")
     public ResponseEntity<Object> modifyCustomer (@RequestBody Customer customerToModified, @RequestHeader HttpHeaders httpHeaders){
         Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
         if (customerToModified.getUsername() == null || !customerToModified.getUsername().equals(customer.getUsername())){
@@ -55,7 +55,7 @@ public class CustomerController {
         }
         }
 
-    @PostMapping(path = "/api/v1/customer")
+    @PostMapping(path = "/api/v1/customer", produces = "application/json")
     public ResponseEntity<Object> createCustomer (@RequestBody Customer customer){
         Customer customerCreated = customerServiceImpl.createCustomer(customer);
         if (customerCreated == null){
@@ -66,7 +66,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping(path = "/api/v1/customer/createWithList")
+    @PostMapping(path = "/api/v1/customer/createWithList", produces = "application/json")
     public ResponseEntity<Object> createWithList (@RequestBody List<Customer> customerList){
         List<Customer> customerListCreated = customerServiceImpl.createWithList(customerList);
         if (customerListCreated.isEmpty()){
@@ -77,7 +77,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping(path = "/api/v1/customer/createWithArray")
+    @PostMapping(path = "/api/v1/customer/createWithArray", produces = "application/json")
     public ResponseEntity<Object> createWithArray (@RequestBody Customer[] customerArray){
         Customer[] customerArrayCreated = customerServiceImpl.createWithArray(customerArray);
         if (customerArrayCreated.length == 0){
@@ -88,7 +88,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping(path = "/api/v1/customer/{username}")
+    @DeleteMapping(path = "/api/v1/customer/{username}", produces = "application/json")
     public ResponseEntity<Object> deleteCustomer (@PathVariable String username, @RequestHeader HttpHeaders httpHeaders){
         Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
         if (username == null || !username.equals(customer.getUsername())){

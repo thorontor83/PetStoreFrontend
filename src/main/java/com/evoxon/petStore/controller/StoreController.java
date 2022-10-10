@@ -20,7 +20,7 @@ public class StoreController {
         this.orderServiceImpl = orderServiceImpl;
     }
 
-    @GetMapping(path = "api/v1/store/order/{orderIdString}")
+    @GetMapping(path = "api/v1/store/order/{orderIdString}", produces = "application/json")
     public ResponseEntity<Object> getOrderById(@PathVariable String orderIdString){
         if (orderIdString == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order's Id is not valid");
@@ -35,7 +35,7 @@ public class StoreController {
         }
     }
 
-    @GetMapping(path = "api/v1/store/inventory")
+    @GetMapping(path = "api/v1/store/inventory", produces = "application/json")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getInventory(){
         Map<String, Integer> inventory = new HashMap<String, Integer>();
@@ -49,7 +49,7 @@ public class StoreController {
     }
 
 
-    @PostMapping(path = "api/v1/store/order")
+    @PostMapping(path = "api/v1/store/order", produces = "application/json")
     public ResponseEntity<Object> createOrder(@RequestBody Order order) throws Exception {
         if (order == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order is not valid");
@@ -62,7 +62,7 @@ public class StoreController {
         }
     }
 
-    @DeleteMapping(path = "api/v1/store/order/{orderIdString}")
+    @DeleteMapping(path = "api/v1/store/order/{orderIdString}", produces = "application/json")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> deleteOrder(@PathVariable String orderIdString){
         if (orderIdString == null){
