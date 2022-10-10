@@ -25,7 +25,8 @@ public class CustomerController {
     public ResponseEntity<Object> getCustomerByName (@PathVariable String username, @RequestHeader HttpHeaders httpHeaders){
         Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
 
-        if (username == null || !username.equals(customer.getUsername())){
+        //if (username == null || !username.equals(customer.getUsername())){
+        if (username == null ){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
         Customer customerToGet = customerServiceImpl.getCustomerByName(username);

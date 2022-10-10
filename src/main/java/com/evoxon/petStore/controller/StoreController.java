@@ -36,7 +36,7 @@ public class StoreController {
     }
 
     @GetMapping(path = "api/v1/store/inventory")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getInventory(){
         Map<String, Integer> inventory = new HashMap<String, Integer>();
         inventory = orderServiceImpl.getInventory();
@@ -63,7 +63,7 @@ public class StoreController {
     }
 
     @DeleteMapping(path = "api/v1/store/order/{orderIdString}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> deleteOrder(@PathVariable String orderIdString){
         if (orderIdString == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order's Id is not valid");

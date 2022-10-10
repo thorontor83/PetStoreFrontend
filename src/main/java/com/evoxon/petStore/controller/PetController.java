@@ -62,7 +62,7 @@ public class PetController {
     }
 
     @PostMapping(path = "/api/v1/pet")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> createPet(@RequestBody Pet pet){
         if (pet == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
@@ -77,7 +77,7 @@ public class PetController {
     }
 
     @PutMapping(path = "/api/v1/pet")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> updatePet(@RequestBody Pet pet){
         if (pet == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
@@ -92,7 +92,7 @@ public class PetController {
     }
 
     @DeleteMapping(path = "/api/v1/pet/{petId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> deletePet(@PathVariable String petId){
         if (petId == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pet is not valid");
