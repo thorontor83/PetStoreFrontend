@@ -7,13 +7,27 @@ import java.util.Objects;
 public class Pet {
     private Long id;
     private String petName;
+
+    private String imageSrc;
     private Category category;
     private List<String> tags;
     private PetStatus petStatus;
 
-    public Pet(Long id, String petName, Category category, List<String> tags, PetStatus petStatus) {
+    public Pet() {
+    }
+
+    public Pet(Long id, String petName, String imageSrc, Category category, List<String> tags, PetStatus petStatus) {
         this.id = id;
         this.petName = petName;
+        this.imageSrc = imageSrc;
+        this.category = category;
+        this.tags = tags;
+        this.petStatus = petStatus;
+    }
+
+    public Pet(String petName, String imageSrc, Category category, List<String> tags, PetStatus petStatus) {
+        this.petName = petName;
+        this.imageSrc = imageSrc;
         this.category = category;
         this.tags = tags;
         this.petStatus = petStatus;
@@ -57,6 +71,14 @@ public class Pet {
 
     public void setPetStatus(PetStatus petStatus) {
         this.petStatus = petStatus;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
     @Override

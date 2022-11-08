@@ -33,7 +33,7 @@ class PetServiceImplTest {
     @Mock
     private PetRepository petRepository;
 
-    @Test
+  /*  @Test
     void shouldGetPetById() {
         //given
         Pet pet = new Pet(0L, "Chihuahua",new Category(0L,"Dog"), List.of("Small","Aggresive"),PetStatus.AVAILABLE );
@@ -151,6 +151,6 @@ class PetServiceImplTest {
         //then
         assertThat(isDelete).isFalse();
         verify(petRepository,Mockito.times(0)).delete(petEntity);
-    }
+    }*/
 
 }

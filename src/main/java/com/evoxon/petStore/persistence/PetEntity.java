@@ -1,10 +1,8 @@
 package com.evoxon.petStore.persistence;
 
-import com.evoxon.petStore.domain.pet.Category;
 import com.evoxon.petStore.domain.pet.PetStatus;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "pets")
@@ -22,6 +20,8 @@ public class PetEntity {
     )
     private Long id;
     private String petName;
+
+    private String imageSrc;
     private Long categoryId;
     private String categoryName;
     private String tags;
@@ -29,6 +29,25 @@ public class PetEntity {
     private PetStatus petStatus;
 
     public PetEntity() {
+    }
+
+    public PetEntity(Long id, String petName, String imageSrc, Long categoryId, String categoryName, String tags, PetStatus petStatus) {
+        this.id = id;
+        this.petName = petName;
+        this.imageSrc = imageSrc;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.tags = tags;
+        this.petStatus = petStatus;
+    }
+
+    public PetEntity(Long id, String petName, Long categoryId, String categoryName, String tags, PetStatus petStatus) {
+        this.id = id;
+        this.petName = petName;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.tags = tags;
+        this.petStatus = petStatus;
     }
 
     public PetEntity(String petName, Long categoryId, String categoryName, String tags, PetStatus petStatus) {
@@ -39,9 +58,9 @@ public class PetEntity {
         this.petStatus = petStatus;
     }
 
-    public PetEntity(Long id, String petName, Long categoryId, String categoryName, String tags, PetStatus petStatus) {
-        this.id = id;
+    public PetEntity(String petName, String imageSrc, Long categoryId, String categoryName, String tags, PetStatus petStatus) {
         this.petName = petName;
+        this.imageSrc = imageSrc;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.tags = tags;
@@ -94,5 +113,13 @@ public class PetEntity {
 
     public void setPetStatus(PetStatus petStatus) {
         this.petStatus = petStatus;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 }

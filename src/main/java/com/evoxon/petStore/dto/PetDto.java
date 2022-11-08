@@ -10,12 +10,12 @@ import java.util.List;
 public class PetDto {
 
     public static Pet fromEntityToDomain(PetEntity petEntity) {
-        return new Pet(petEntity.getId(), petEntity.getPetName(), new Category(petEntity.getCategoryId(),
+        return new Pet(petEntity.getId(), petEntity.getPetName(),petEntity.getImageSrc(), new Category(petEntity.getCategoryId(),
                 petEntity.getCategoryName()), convertToList(petEntity.getTags()), petEntity.getPetStatus());
     }
 
     public static PetEntity fromDomainToEntity(Pet pet) {
-        return new PetEntity(pet.getId(), pet.getPetName(), pet.getCategory().getId(), pet.getCategory().getCategoryName(),
+        return new PetEntity(pet.getId(), pet.getPetName(),pet.getImageSrc(), pet.getCategory().getId(), pet.getCategory().getCategoryName(),
                 convertToConcatenatedString(pet.getTags()), pet.getPetStatus());
     }
 
