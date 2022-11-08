@@ -15,4 +15,6 @@ public interface CustomerService {
     public List<Customer> createWithList(List<Customer> customerList);
 
     public Customer[] createWithArray(Customer[] customerArray);
+
+    List<Customer> getAllCustomers();
 }

@@ -8,17 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -31,31 +23,6 @@ class CustomerServiceImplTest {
     @Mock
     private CustomerRepository customerRepository;
 
-    @Test
-    void shouldLoadUserByUsername() {
-        //given
-        String username = "Julio";
-        CustomerEntity customerEntity = new CustomerEntity(0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
-        when(customerRepository.findByUsername("Julio")).thenReturn(Optional.of(customerEntity));
-        //when
-        UserDetails userDetails = customerService.loadUserByUsername(username);
-        //then
-        assertThat(userDetails.getUsername()).isEqualTo("Julio");
-        assertThat(userDetails.getPassword()).isEqualTo("1234");
-        assertThat(userDetails.getAuthorities()).toString().equals("USER");
-    }
-
-    @Test
-    void shouldNotLoadUserByUsername() {
-        //given
-        String username = "Julio";
-        CustomerEntity customerEntity = new CustomerEntity(0L,"Julio","1234","julio@mail.com","Felix 7",CustomerRole.USER);
-        when(customerRepository.findByUsername("Julio")).thenReturn(Optional.empty());
-        //when
-        assertThatThrownBy(() -> customerService.loadUserByUsername(username)).isInstanceOf(UsernameNotFoundException.class);
-        //then
-        verify(customerRepository,times(1)).findByUsername("Julio");
-    }
     @Test
     void shouldGetCustomerByName() {
         //given

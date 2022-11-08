@@ -4,9 +4,7 @@ import com.evoxon.petStore.domain.order.Order;
 import com.evoxon.petStore.domain.order.OrderServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +34,6 @@ public class StoreController {
     }
 
     @GetMapping(path = "api/v1/store/inventory", produces = "application/json")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getInventory(){
         Map<String, Integer> inventory = new HashMap<String, Integer>();
         inventory = orderServiceImpl.getInventory();
@@ -63,7 +60,6 @@ public class StoreController {
     }
 
     @DeleteMapping(path = "api/v1/store/order/{orderIdString}", produces = "application/json")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> deleteOrder(@PathVariable String orderIdString){
         if (orderIdString == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order's Id is not valid");

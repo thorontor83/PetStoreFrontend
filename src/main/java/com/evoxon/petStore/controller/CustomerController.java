@@ -2,7 +2,6 @@ package com.evoxon.petStore.controller;
 
 import com.evoxon.petStore.domain.customer.Customer;
 import com.evoxon.petStore.domain.customer.CustomerServiceImpl;
-import com.evoxon.petStore.jwt.TokenUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +20,19 @@ public class CustomerController {
         this.customerServiceImpl = customerServiceImpl;
     }
 
-    @GetMapping(path = "/api/v1/customer/{username}", produces = "application/json")
-    public ResponseEntity<Object> getCustomerByName (@PathVariable String username, @RequestHeader HttpHeaders httpHeaders){
-        Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
+    @GetMapping(path = "/api/v1/customer", produces = "application/json")
+    public ResponseEntity<Object> getAllCustomers (){
+        List<Customer> customersList = customerServiceImpl.getAllCustomers();
+        if (customersList != null){
+            return ResponseEntity.status(HttpStatus.OK).body(customersList);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There was a problem");
+        }
+    }
 
-        //if (username == null || !username.equals(customer.getUsername())){
+    @GetMapping(path = "/api/v1/customer/{username}", produces = "application/json")
+    public ResponseEntity<Object> getCustomerByName (@PathVariable String username){
         if (username == null ){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
@@ -39,9 +46,9 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/api/v1/customer/{username}", produces = "application/json")
-    public ResponseEntity<Object> modifyCustomer (@RequestBody Customer customerToModified, @RequestHeader HttpHeaders httpHeaders){
-        Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
-        if (customerToModified.getUsername() == null || !customerToModified.getUsername().equals(customer.getUsername())){
+    public ResponseEntity<Object> modifyCustomer (@RequestBody Customer customerToModified){
+
+        if (customerToModified.getUsername() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is not valid");
         }
         else{
@@ -89,12 +96,11 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = "/api/v1/customer/{username}", produces = "application/json")
-    public ResponseEntity<Object> deleteCustomer (@PathVariable String username, @RequestHeader HttpHeaders httpHeaders){
-        Customer customer = TokenUtil.getDataFromAccessToken(httpHeaders);
-        if (username == null || !username.equals(customer.getUsername())){
+    public ResponseEntity<Object> deleteCustomer (@PathVariable String username){
+        if (username == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username supplied");
         }
-        String message = customerServiceImpl.deleteCustomer(customer.getUsername());
+        String message = customerServiceImpl.deleteCustomer(username);
         if (message == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
         }

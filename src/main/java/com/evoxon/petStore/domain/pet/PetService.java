@@ -15,4 +15,6 @@ public interface PetService {
     public Pet updatePet(Pet pet);
 
     public Boolean deletePet(Long petId);
+
+    List<Pet> getAllPets();
 }

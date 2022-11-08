@@ -5,7 +5,6 @@ import com.evoxon.petStore.domain.pet.PetServiceImpl;
 import com.evoxon.petStore.domain.pet.PetStatusForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +16,18 @@ public class PetController {
     private final PetServiceImpl petServiceImpl;
 
     public PetController(PetServiceImpl petServiceImpl) {this.petServiceImpl = petServiceImpl;}
+
+    @GetMapping(path = "/api/v1/pet", produces = "application/json")
+    public ResponseEntity<Object> getAllPets(){
+
+        List<Pet> petsList = petServiceImpl.getAllPets();
+        if (petsList != null){
+            return ResponseEntity.status(HttpStatus.OK).body(petsList);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There was a problem retrieving the pets");
+        }
+    }
 
     @GetMapping(path = "/api/v1/pet/{petIdString}", produces = "application/json")
     public ResponseEntity<Object> getPetById(@PathVariable String petIdString){

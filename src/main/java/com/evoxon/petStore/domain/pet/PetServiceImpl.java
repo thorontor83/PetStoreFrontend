@@ -18,6 +18,12 @@ public class PetServiceImpl implements PetService{
 
     public PetServiceImpl(PetRepository petRepository) {this.petRepository = petRepository;}
 
+    @Override
+    public List<Pet> getAllPets() {
+        List<PetEntity> entityList = petRepository.findAll();
+        if (entityList.isEmpty()) return null;
+        return entityList.stream().map(PetDto::fromEntityToDomain).collect(Collectors.toList());
+    }
 
     public Pet getPetById(Long petId) {
         Optional<PetEntity> optionalPetEntity = petRepository.findById(petId);
