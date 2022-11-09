@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin("*")
 public class CustomerController {
 
     private final CustomerServiceImpl customerServiceImpl;

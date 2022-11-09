@@ -10,6 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping
+@CrossOrigin("*")
 public class StoreController {
 
     final private OrderServiceImpl orderServiceImpl;

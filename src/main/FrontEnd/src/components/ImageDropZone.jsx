@@ -26,8 +26,7 @@ function ImageDropzone({ value, onChange }) {
     const onDrop = useCallback((acceptedFiles) => {
         setLoading(true);
         console.log(acceptedFiles);
-        onChange(acceptedFiles[0].path);
-        console.log(value);
+        onChange(acceptedFiles[0]);
         setLoading(false)
     }, []);
 
@@ -46,7 +45,7 @@ function ImageDropzone({ value, onChange }) {
                 <input {...getInputProps()} />
                 {
                     value ? (
-                        <img src={require(`../resources/images/${value}`)} />
+                        <img src={require(`../resources/images/${value.path}`)} />
                     ) : loading ? (
                         <Spinner variant="standard" animation="border" role="status" />
                     ) : (

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import UploadPage from "./pages/Upload";
+import { FormPage } from "./pages/FormPage";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 <Routes>
   <Route path="/" element={<Home />} />
   <Route path="/upload" element={<UploadPage />} />
+  <Route path="/form" element={<FormPage/>} />
 </Routes>
 </>
   );
