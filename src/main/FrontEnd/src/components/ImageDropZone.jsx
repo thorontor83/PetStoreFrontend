@@ -1,7 +1,7 @@
 import { useDropzone } from 'react-dropzone';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { Spinner, Image } from '@chakra-ui/react';
+import { Spinner, Image, Text } from '@chakra-ui/react';
 import placeholder from "../resources/images/placeholder.png";
 
 
@@ -21,8 +21,6 @@ const Dropzone = styled.div`
 function ImageDropzone({ value, onChange }) {
 
     const [loading, setLoading] = useState(false);
-
-
     const onDrop = useCallback((acceptedFiles) => {
         setLoading(true);
         console.log(acceptedFiles);
@@ -34,7 +32,6 @@ function ImageDropzone({ value, onChange }) {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
         multiple: false,
-        accept: 'image/*',
     });
 
 
@@ -45,7 +42,7 @@ function ImageDropzone({ value, onChange }) {
                 <input {...getInputProps()} />
                 {
                     value ? (
-                        <img src={require(`../resources/images/${value.path}`)} />
+                        <Text>{value.path}</Text>
                     ) : loading ? (
                         <Spinner variant="standard" animation="border" role="status" />
                     ) : (

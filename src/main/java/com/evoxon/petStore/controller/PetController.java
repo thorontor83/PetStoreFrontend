@@ -3,6 +3,7 @@ package com.evoxon.petStore.controller;
 import com.evoxon.petStore.domain.pet.Pet;
 import com.evoxon.petStore.domain.pet.PetServiceImpl;
 import com.evoxon.petStore.domain.pet.PetStatusForm;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,17 @@ public class PetController {
     public ResponseEntity<Object> getAllPets(){
 
         List<Pet> petsList = petServiceImpl.getAllPets();
+        if (petsList != null){
+            return ResponseEntity.status(HttpStatus.OK).body(petsList);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There was a problem retrieving the pets");
+        }
+    }
+
+    @GetMapping(path= "/api/v1/petpaged")
+    public ResponseEntity<Object> getAllPetsPaged(@RequestParam int page){
+        Page<Pet> petsList = petServiceImpl.getAllPetsPaged(page);
         if (petsList != null){
             return ResponseEntity.status(HttpStatus.OK).body(petsList);
         }

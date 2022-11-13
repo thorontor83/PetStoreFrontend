@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import ImageDropZone from '../components/ImageDropZone';
 import { FormLabel, Button } from '@chakra-ui/react';
 import axios from "axios";
 
-const UPLOAD_URL = "http://localhost:8080/api/v1/upload";
+const UPLOAD_URL = "http://localhost:8080/upload";
 
 
 
@@ -28,8 +27,8 @@ export default function Upload() {
     const onSubmit = data => (console.log(data),
 
 
-        body = { image: data },
-        console.log(body),
+        body = { image: image },
+        console.log(image),
         /*axios({
             method: "post",
             url: UPLOAD_URL,
@@ -63,11 +62,11 @@ export default function Upload() {
             <h1>Upload Page</h1>
             <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                 <fieldset>
-                    <label>
+                    <div>
                         <FormLabel>Upload your image</FormLabel>
                         <ImageDropZone value={image} onChange={setImage} />
                         <Button mt={4} colorScheme='teal' type="submit" >Upload</Button>
-                    </label>
+                    </div>
                 </fieldset>
             </form>
         </>
