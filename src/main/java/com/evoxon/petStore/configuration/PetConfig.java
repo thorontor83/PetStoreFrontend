@@ -24,7 +24,7 @@ public class PetConfig {
     @Bean
     CommandLineRunner commandLineRunner2(PetRepository petRepository){
         return args -> {
-            PetEntity petEntity1 = new PetEntity("German Shepperd","photo1", 1L, "Dog","Medium Friendly Smart", PetStatus.AVAILABLE);
+            PetEntity petEntity1 = new PetEntity("German Shepherd","photo1", 1L, "Dog","Medium Friendly Smart", PetStatus.AVAILABLE);
             PetEntity petEntity2 = new PetEntity("Siamese","photo2", 2L, "Cat","Small Friendly", PetStatus.AVAILABLE);
             PetEntity petEntity3 = new PetEntity("Boxer","photo3", 1L, "Dog","Medium Aggressive", PetStatus.PENDING);
             PetEntity petEntity4 = new PetEntity("Pony","photo4", 3L, "Horse","Large Friendly Rideable", PetStatus.AVAILABLE);

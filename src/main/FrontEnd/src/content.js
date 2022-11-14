@@ -3,19 +3,19 @@ const content = [
     {
       id: 1,
       title: 'Grow Together',
-      body: 'Generate meaningful discussions with your audience and build a strong, loyal community. Think of the insightful conversations you miss out on with a feedback form.',
+      body: 'Faucibus ultrices egestas nisl gravida fusce natoque euismod, lobortis at congue ad varius. Vitae natoque ullamcorper nisi eu viverra faucibus, interdum ad tristique aliquam pharetra.',
       image: 'card1.png',
     },
     {
       id: 2,
       title: 'Personal Attention',
-      body: "You wouldn't paginate a conversation in real life, so why do it online? Our threads have just-in-time loading for a more natural flow.",
+      body: "Per mauris euismod sapien condimentum elementum massa primis, risus tortor aliquet faucibus rutrum curae class iaculis, sollicitudin commodo.",
       image: 'card2.png',
     },
     {
       id: 3,
       title: 'All You Need',
-      body: "It takes no time at all to integrate Huddle with your app's authentication solution. This means, once signed in to your app, your users can start chatting immediately.",
+      body: "Sociosqu ut metus placerat fames velit aliquam dapibus nostra, donec nascetur neque mi senectus netus et quis nisl, nibh porta torquent ligula odio.",
       image: 'card3.png',
     },
   ]

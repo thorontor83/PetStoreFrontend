@@ -10,8 +10,19 @@ export const StyledCard = styled.div`
   margin: 40px 0;
   padding: 60px;
   flex-direction: 'row';
+  h2{
+  font-weight: bold;
+  color: #00000;
+  font-size: 32px;
+  margin-bottom: 4px;
+  }
+  li{
+    margin-bottom:4px;
+  }
   img {
-    width: 60%;
+    width: 300px;
+    height: 300px;
+    
   }
   & > div {
     flex: 1;

@@ -35,6 +35,3 @@ public class UploadController {
         return "imageupload/index";
     }
 }
-
-
-// , consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}
