@@ -17,7 +17,8 @@ export default function PetCard({ pet: { id, tags, petName, petStatus , imageSrc
           <li key={index}>{tag}</li>
           ))}
           <Spacer />
-        <Tag textAlign={'center'} width={100} marginTop={4} size="md" variant="solid" colorScheme={petStatus=="AVAILABLE"?"green": (petStatus=="PENDING")? "orange":"red"}>{petStatus}</Tag>
+        <Tag alignItems="center" textAlign="justify" width={90} marginTop={4} size="md" variant="solid" 
+        colorScheme={petStatus=="AVAILABLE"?"green": (petStatus=="PENDING")? "orange":"red"}>{petStatus}</Tag>
           </Flex>
       </div>
       <div>

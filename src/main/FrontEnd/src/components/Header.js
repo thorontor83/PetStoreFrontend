@@ -10,7 +10,9 @@ export default function Header() {
             <Container>
                 <Nav>
                     <Logo src = {require ('../resources/images/logo.png')} alt='' />
+                    <Link href='http://localhost:3000/user'>
                     <Button>Register now!</Button>
+                    </Link>
                 </Nav>
                 <Flex>
                     <div>

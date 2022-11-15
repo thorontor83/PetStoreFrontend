@@ -20,7 +20,7 @@ export default function PageButton({page,setPage,maxPage,setMaxPage}) {
             <Flex>
               <Button onClick={() => onChangePage(-1)}>Prev</Button>              
                 <Text fontSize="xl" p={3} >
-                  {page+1}  
+                  {page+1}/{maxPage}  
                 </Text>           
               <Button onClick={() => onChangePage(+1)}>Next</Button >
             </Flex>

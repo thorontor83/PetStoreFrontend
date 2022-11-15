@@ -11,22 +11,10 @@ import content from '../content';
 
 export default function Home() {
 
-  const [imagePath, setImagePath] = useState();
-
-  const theme = {
-    colors: {
-      header: '#ebfbff',
-      body: '#fff',
-      footer: '#003333',
-    },
-    mobile: '768px',
-  }
 
 
   return (
-    <ThemeProvider theme = {theme}>
       <>
-      <GlobalStyles />
         <Header />
         <Container>
           {content.map((item, index) => (
@@ -35,6 +23,5 @@ export default function Home() {
         </Container>
         <Footer />
       </>
-    </ThemeProvider>
   );
 }

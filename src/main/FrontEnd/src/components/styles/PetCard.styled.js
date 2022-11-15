@@ -19,8 +19,12 @@ export const StyledCard = styled.div`
   li{
     margin-bottom:4px;
   }
+  Tag{
+    align-items: center;
+    text-align: center;
+  }
   img {
-    width: 300px;
+
     height: 300px;
     
   }
