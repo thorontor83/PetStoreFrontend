@@ -8,6 +8,7 @@ import { PetCatalog } from "./pages/PetCatalog";
 import RegisterUser from "./pages/RegisterUser";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./components/styles/Global";
+import Orders from "./pages/Orders";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
   <Route path="/upload" element={<UploadPage />} />
   <Route path="/form" element={<FormPage/>} />
   <Route path="/user" element={<RegisterUser/>} />
+  <Route path="/orders" element={<Orders/>} />
   </Routes>
   </>
   </ThemeProvider>

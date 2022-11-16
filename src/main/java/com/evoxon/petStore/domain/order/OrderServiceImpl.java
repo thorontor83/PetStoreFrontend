@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl {
@@ -57,6 +58,11 @@ public class OrderServiceImpl {
             inventory.put(petStatus.name(),(int)petEntityList.stream().filter(p->p.getPetStatus()==petStatus).count());
         }
         return inventory;
+    }
+
+    public List<Order> getAllOrders() {
+        List<OrderEntity> entityList = orderRepository.findAll();
+        return entityList.stream().map(OrderDto::fromEntityToDomain).collect(Collectors.toList());
     }
 }
 

@@ -1,5 +1,9 @@
+import axios from "axios";
 
-export default function ValidateForm ({ username, email, password, confirmPass }) {
+const UrlRegisterUser = "http://localhost:8080/api/v1/customer";
+
+
+export default function ValidateForm({ username, email, address, password, confirmPass, role }) {
 	if (!username.trim()) {
 		return 'Username required';
 	}
@@ -9,6 +13,9 @@ export default function ValidateForm ({ username, email, password, confirmPass }
 		return 'Email required';
 	} else if (regex.test(email.toLocalLowerCase)) {
 		return 'Email address is invalid';
+	}
+	if (!address) {
+		return 'Address required';
 	}
 	if (!password) {
 		return 'Password is required';
@@ -21,5 +28,29 @@ export default function ValidateForm ({ username, email, password, confirmPass }
 	} else if (confirmPass !== password) {
 		return 'Passwords do not match';
 	}
+	if (!role) {
+		return 'Role required';
+	}
+
+
+
+	axios.post(UrlRegisterUser, {
+		username: username,
+		email: email,
+		address: address,
+		password: password,
+		confirmPass: confirmPass,
+		customerRole: role,
+	})
+		.then(function (response) {
+			console.log(response);
+
+		})
+		.catch(function (error) {
+			console.log(error);
+			return 'The user was not created';
+		})
+
 	return null;
+
 }

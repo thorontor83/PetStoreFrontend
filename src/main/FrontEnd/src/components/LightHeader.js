@@ -9,7 +9,9 @@ export default function LightHeader() {
         <StyledHeader>
             <Container>
                 <Nav>
+                    <Link href='http://localhost:3000'>
                     <Logo src = {require ('../resources/images/logo.png')} alt='' />
+                    </Link>
                     <Link href='http://localhost:3000/user'>
                     <Button>Register now!</Button>
                     </Link>
