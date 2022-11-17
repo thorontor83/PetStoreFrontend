@@ -5,34 +5,29 @@ import { Tag } from "@chakra-ui/react";
 import axios from "axios";
 import { Button, Box, Flex, Text, Heading, Link, Spacer, List } from "@chakra-ui/react";
 
-const urlPetCatalog = "http://localhost:8080/api/v1/pet/1";
+const urlPetCatalog = "http://localhost:8080/api/v1/pet/";
 
 
 export default function OrderCard({ order: { id, petId, quantity, shipDate, orderStatus, complete } }) {
 
-    const [pet, setPet] = useState();
+    const [pet, setPet] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    var data;
 
-    console.log("petId");
+        useEffect (() => {
+            if(petId!=undefined){
+            axios.get(urlPetCatalog+petId).then(res => {
+                data = res.data;
+                setPet(data);
+                setIsLoading(false);
+            })}
+        },[])
 
-
-    {/*const fetchPet = () => {
-
-        console.log(petId);
-
-        axios.get(urlPetCatalog).then(res => {
-            console.log(res)
-            const data = res.data
-            setPet(data);
-        })
-    }
-
-    useEffect(() => {
-        fetchPet();
-    }, [])*/}
 
 
     return (
-        {/*<StyledCard>
+        (isLoading==false)?(           
+        <StyledCard>
             <div>
                 <Flex flexDirection={'column'} >
                     <h2>{pet.petName}</h2>
@@ -42,10 +37,11 @@ export default function OrderCard({ order: { id, petId, quantity, shipDate, orde
                 </Flex>
             </div>
             <div>
-                <img src={require(`../resources/images/${pet.imageSrc}.png`)} alt='' />
+                {(pet.imageSrc!==undefined)?
+                <img src={require(`../resources/images/${pet.imageSrc}.png`)} alt='' />:"falta imagen"}
             </div>
-    </StyledCard>*/}
-
+        </StyledCard>
+        ):"loading"
 
     )
 }

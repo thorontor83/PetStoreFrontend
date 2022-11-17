@@ -20,25 +20,22 @@ export default function Orders() {
     mobile: '768px',
   }
 
-  const [orders, setOrders] = useState([]);
-  const [response, setResponse] = useState("hola");
+  const [orders, setOrders] = useState([null]);
+  const [isLoading, setIsLoading] = useState(true);
+  var data = [];
 
 
-
-  const fetchOrders = () => {
-
-    axios.get(urlOrderCatalog).then(res => {
-        setResponse(res);
-        if(response!="hola"){setOrders(response.data)};
-  })
-}
-
-    
-    
 
   useEffect(() => {
-    fetchOrders();
+    axios.get(urlOrderCatalog).then(res => {
+      console.log(res);
+      data = res.data;
+      setOrders(data);
+      setIsLoading(false);
+    })
   }, [])
+
+
 
 
   return (
@@ -47,15 +44,13 @@ export default function Orders() {
         <GlobalStyles />
         <LightHeader />
         <Container>
-        {/*orders.map((order, index) => (
-            <OrderCard key={index} order={order} />
-        ))*/}
-        {/*<OrderCard  order={orders[0]} />*/}
-        {(response==="hola")?"adios":response.data[0]}
+          {(isLoading == false) ? (
+          orders.map((order, index) => (
+            <OrderCard key={index} order={order} />))
+          ) : "loading"}
         </Container>
         <Footer />
       </>
     </ThemeProvider>
   );
-
 }

@@ -25,12 +25,12 @@ public class OrderConfig {
     @Bean
     CommandLineRunner commandLineRunner3(PetRepository petRepository){
         return args -> {
-            OrderEntity orderEntity1 = new OrderEntity(1L,3, Date.valueOf("2023-05-04"), OrderStatus.PLACED,false);
-            OrderEntity orderEntity2 = new OrderEntity(2L,2, Date.valueOf("2023-08-20"), OrderStatus.APPROVED,false);
-            OrderEntity orderEntity3 = new OrderEntity(3L,1, Date.valueOf("2023-05-12"), OrderStatus.APPROVED,false);
-            OrderEntity orderEntity4 = new OrderEntity(4L,4, Date.valueOf("2023-07-11"), OrderStatus.APPROVED,false);
-            OrderEntity orderEntity5 = new OrderEntity(5L,3, Date.valueOf("2023-05-04"), OrderStatus.DELIVERED,false);
-            OrderEntity orderEntity6 = new OrderEntity(0L,2, Date.valueOf("2023-11-24"), OrderStatus.DELIVERED,true);
+            OrderEntity orderEntity1 = new OrderEntity(0L,2, Date.valueOf("2023-11-24"), OrderStatus.DELIVERED,true);
+            OrderEntity orderEntity2 = new OrderEntity(1L,3, Date.valueOf("2023-05-04"), OrderStatus.PLACED,false);
+            OrderEntity orderEntity3 = new OrderEntity(2L,2, Date.valueOf("2023-08-20"), OrderStatus.APPROVED,false);
+            OrderEntity orderEntity4 = new OrderEntity(3L,1, Date.valueOf("2023-05-12"), OrderStatus.APPROVED,false);
+            OrderEntity orderEntity5 = new OrderEntity(4L,4, Date.valueOf("2023-07-11"), OrderStatus.APPROVED,false);
+            OrderEntity orderEntity6 = new OrderEntity(5L,3, Date.valueOf("2023-05-04"), OrderStatus.DELIVERED,false);
 
 
 
