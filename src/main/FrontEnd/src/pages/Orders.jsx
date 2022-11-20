@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LightHeader from "../components/LightHeader";
+import OrderHeader from '../components/OrderHeader';
 import Footer from "../components/Footer";
 import axios from "axios";
 import OrderCard from '../components/OrderCard';
@@ -42,7 +42,7 @@ export default function Orders() {
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
-        <LightHeader />
+        <OrderHeader />
         <Container>
           {(isLoading == false) ? (
           orders.map((order, index) => (

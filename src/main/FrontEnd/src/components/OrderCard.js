@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyledCard } from './styles/PetCard.styled';
+import { StyledCard } from './styles/OrderCard.styled';
 import { Tag } from "@chakra-ui/react";
 import axios from "axios";
 import { Button, Box, Flex, Text, Heading, Link, Spacer, List } from "@chakra-ui/react";
@@ -14,34 +14,47 @@ export default function OrderCard({ order: { id, petId, quantity, shipDate, orde
     const [isLoading, setIsLoading] = useState(true);
     var data;
 
-        useEffect (() => {
-            if(petId!=undefined){
-            axios.get(urlPetCatalog+petId).then(res => {
+    useEffect(() => {
+        if (petId != undefined) {
+            axios.get(urlPetCatalog + petId).then(res => {
                 data = res.data;
                 setPet(data);
                 setIsLoading(false);
-            })}
-        },[])
+            })
+        }
+    }, [])
 
 
 
     return (
-        (isLoading==false)?(           
-        <StyledCard>
-            <div>
-                <Flex flexDirection={'column'} >
-                    <h2>{pet.petName}</h2>
-                    <Spacer />
-                    <Tag alignItems="center" textAlign="justify" width={90} marginTop={4} size="md" variant="solid"
-                        colorScheme={orderStatus == "PLACED" ? "orange" : (orderStatus == "APPROVED") ? "green" : "purple"}>{orderStatus}</Tag>
-                </Flex>
-            </div>
-            <div>
-                {(pet.imageSrc!==undefined)?
-                <img src={require(`../resources/images/${pet.imageSrc}.png`)} alt='' />:"falta imagen"}
-            </div>
-        </StyledCard>
-        ):"loading"
+        (isLoading == false) ? (
+            <StyledCard>
+                <div>
+                    <Flex width={400} flexDirection={'column'} >
+                        <h2>{pet.petName}</h2>
+                        <Flex flexDirection={'row'}>
+                            <p>{"Quantity:"}</p>
+                            <div>{quantity}</div>
+                        </Flex>
+                        <Flex flexDirection={'row'}>
+                            <p>{"Delivery date:"}</p>
+                            <div>{shipDate.slice(0, 10)}</div>
+                        </Flex>
+                        <Tag alignItems="center" textAlign="justify" width={90} marginTop={4} size="md" variant="solid"
+                            colorScheme={orderStatus == "PLACED" ? "orange" : (orderStatus == "APPROVED") ? "green" : "purple"}>{orderStatus}</Tag>
+                    </Flex>
+                </div>
+                <div>
+                    {(pet.imageSrc !== undefined) ?
+                        <img src={require(`../resources/images/${pet.imageSrc}.png`)} alt='' /> : "Image missing"}
+                </div>
+                <Spacer />
+                <div>
+                    {(complete == true) ?
+                        <img src={require(`../resources/images/completed-stamp.png`)} alt='' /> : ""}
+                </div>
+            </StyledCard>
+        ) : "loading"
 
     )
 }

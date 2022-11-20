@@ -22,7 +22,7 @@ export default function PetCard({ pet: { id, tags, petName, petStatus , imageSrc
           </Flex>
       </div>
       <div>
-        <img src={require(`../resources/images/${imageSrc}.png`)} alt='' />
+        <img  src={require(`../resources/images/${imageSrc}.png`)} alt='' />
       </div>
     </StyledCard>
   )

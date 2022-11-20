@@ -25,7 +25,7 @@ export const StyledCard = styled.div`
   }
   img {
 
-    height: 300px;
+    height: 150px;
     
   }
   & > div {

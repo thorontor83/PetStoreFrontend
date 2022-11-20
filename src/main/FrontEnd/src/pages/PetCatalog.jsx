@@ -54,26 +54,26 @@ export function PetCatalog() {
       <>
         <GlobalStyles />
         <LightHeader />
-          <Container>
-        <Flex>
-          <Spacer />
-          <PageButton
-          page={page} setPage={setPage} 
-          maxPage={maxPage} setMaxPage={setMaxPage} 
-           />
-          <Spacer />
-        </Flex>
+        <Container >
+          <Flex>
+            <Spacer />
+            <PageButton
+              page={page} setPage={setPage}
+              maxPage={maxPage} setMaxPage={setMaxPage}
+            />
+            <Spacer />
+          </Flex>
           {pets.map((pet, index) => (
             <PetCard key={index} pet={pet} />
           ))}
           <Flex>
-          <Spacer />
-          <PageButton 
-          page={page} setPage={setPage} 
-          maxPage={maxPage} setMaxPage={setMaxPage} 
-           />
-          <Spacer />
-        </Flex>
+            <Spacer />
+            <PageButton
+              page={page} setPage={setPage}
+              maxPage={maxPage} setMaxPage={setMaxPage}
+            />
+            <Spacer />
+          </Flex>
         </Container>
         <Footer />
       </>
