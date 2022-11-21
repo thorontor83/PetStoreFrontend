@@ -1,8 +1,8 @@
-import { Flex } from './styles/Flex.styled';
 import axios from "axios";
+import { Box } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import AsyncSelect from "react-select/async";
-import Select from 'react-select'
+import ValidateOrder from "./ValidateOrder";
 import {
     FormContainer,
     FormColumn,
@@ -15,16 +15,12 @@ import {
     FormMessage,
     FormButton,
     FormTitle,
-} from "./styles/UserInput.styled";
-import ValidateForm from "./ValidateForm";
-import RegisterUser from '../pages/RegisterUser';
-import { set } from 'react-hook-form';
+    DatePickerWrapper,
+} from "./styles/OrderInput.styled";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const urlPetCatalog = "http://localhost:8080/api/v1/pet";
-
-
 
 export default function OrderInput() {
 
@@ -32,7 +28,6 @@ export default function OrderInput() {
     const [pet, setPet] = useState([]);
     const [quantity, setQuantity] = useState([]);
     const [date, setDate] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
@@ -47,7 +42,6 @@ export default function OrderInput() {
                     return arr.push({ value: pet.id, label: pet.petName });
                 });
                 setPets(arr);        
-                console.log(pets);
 
             });
         };
@@ -69,7 +63,7 @@ export default function OrderInput() {
 
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        {/*e.preventDefault();
         const resultError = ValidateForm({ pet, quantity, date });
 
         if (resultError !== null) {
@@ -80,7 +74,19 @@ export default function OrderInput() {
         setQuantity('');
         setDate('');
         setError(null);
-        setSuccess('Application was submitted!');
+    setSuccess('Application was submitted!');*/}
+    e.preventDefault();
+    const resultError = ValidateOrder({e, pet, quantity, date});
+
+    if (resultError !== null) {
+        setError(resultError);
+        return;
+    }
+    setPet('');
+    setQuantity('');
+    setDate('');
+    setError(null);
+    setSuccess('Application was submitted!');
 
     };
 
@@ -105,10 +111,22 @@ export default function OrderInput() {
 
             return { ...provided, opacity, transition };
         },
-        fontsize: "11px",
+        placeholder: (defaultStyles) => {
+            return {
+                ...defaultStyles,
+                width: "100%",
+		        height: "35px",
+		        color: "grey",
+		        paddingleft: "5px",
+		        fontsize: "6px",
+		        border:"none",
+		        marginleft: "10px",
+            }},
         margintop: "7px",
         color: "black",
     };
+
+    
 
     return (
         <FormSection>
@@ -117,33 +135,41 @@ export default function OrderInput() {
                     <FormColumn small>
                         <FormTitle>Place your Order</FormTitle>
                         <FormWrapper onSubmit={handleSubmit}>
-
                             <FormInputRow >
                                 <FormLabel>{"Pet"}</FormLabel>
                                 <AsyncSelect
+                                    value={pet}
                                     onChange={handlePetChange}
+                                    isMulti={false}
                                     loadOptions={loadPets}
                                     placeholder={`Select your pet`}                                   
                                     styles={customStyles}
+                                    isClearable
                                 />
                             </FormInputRow>
                             <FormInputRow >
                                 <FormLabel>{"Quantity"}</FormLabel>
                                 <FormInput
-                                    onChange={setQuantity}
-                                    placeholder={`Select the quantity`}                                   
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                    placeholder={`Select the quantity`} 
+                                    isClearable                                  
                                     styles={customStyles}
                                 />
                             </FormInputRow>
                             <FormInputRow >
                                 <FormLabel>{"Date of Delivery"}</FormLabel>
-                                <DatePicker 
+                                
+                                <DatePickerWrapper 
+                                placeholderText="Select a date"
                                 selected={date} 
                                 onChange={setDate}
-                                dateFormat='dd/MM/yyyy'
+                                wrapperClassName='DatePickerWrapper'
+                                dateFormat='yyyy/MM/dd'
                                 minDate={new Date()}
                                 isClearable
+                                styles={customStyles}
                                 />
+                                
                             </FormInputRow>
                             <FormButton type="submit">Submit Order</FormButton>
                         </FormWrapper>

@@ -33,11 +33,11 @@ export default function OrderCard({ order: { id, petId, quantity, shipDate, orde
                     <Flex width={400} flexDirection={'column'} >
                         <h2>{pet.petName}</h2>
                         <Flex flexDirection={'row'}>
-                            <p>{"Quantity:"}</p>
+                            <p >Quantity:&nbsp;</p>
                             <div>{quantity}</div>
                         </Flex>
                         <Flex flexDirection={'row'}>
-                            <p>{"Delivery date:"}</p>
+                            <p>Delivery date:&nbsp;</p>
                             <div>{shipDate.slice(0, 10)}</div>
                         </Flex>
                         <Tag alignItems="center" textAlign="justify" width={90} marginTop={4} size="md" variant="solid"
@@ -51,7 +51,7 @@ export default function OrderCard({ order: { id, petId, quantity, shipDate, orde
                 <Spacer />
                 <div>
                     {(complete == true) ?
-                        <img src={require(`../resources/images/completed-stamp.png`)} alt='' /> : ""}
+                        <img  src={require(`../resources/images/completed-stamp.png`)} alt='' /> : ""}
                 </div>
             </StyledCard>
         ) : "loading"

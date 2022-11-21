@@ -15,7 +15,6 @@ import {
     FormTitle,
 } from "./styles/UserInput.styled";
 import ValidateForm from "./ValidateForm";
-import RegisterUser from '../pages/RegisterUser';
 
 
 

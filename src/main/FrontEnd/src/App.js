@@ -6,6 +6,7 @@ import UploadPage from "./pages/Upload";
 import { FormPage } from "./pages/FormPage";
 import { PetCatalog } from "./pages/PetCatalog";
 import RegisterUser from "./pages/RegisterUser";
+import RegisterPet from "./pages/RegisterPet";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./components/styles/Global";
 import Orders from "./pages/Orders";
@@ -32,6 +33,7 @@ function App() {
   <Routes> 
   <Route path="/" element={<Home />} />
   <Route path="/pets" element={<PetCatalog/>} />
+  <Route path="/pets/register" element={<RegisterPet/>} />
   <Route path="/upload" element={<UploadPage />} />
   <Route path="/form" element={<FormPage/>} />
   <Route path="/user" element={<RegisterUser/>} />
