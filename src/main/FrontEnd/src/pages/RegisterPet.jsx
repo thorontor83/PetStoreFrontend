@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "../components/styles/Global";
 import { Container } from "../components/styles/Container.styled";
+import PetInput from "../components/PetInput";
 
 
 export default function RegisterPet() {
@@ -23,7 +24,7 @@ export default function RegisterPet() {
         <GlobalStyles />
         <LightHeader />
         <Container>
-          
+          <PetInput />
         </Container>
         <Footer />
       </>

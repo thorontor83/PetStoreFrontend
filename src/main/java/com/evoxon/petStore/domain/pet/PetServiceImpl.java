@@ -45,6 +45,8 @@ public class PetServiceImpl implements PetService{
     }
 
     public Pet createPet(Pet pet) {
+        if(pet.getCategory()==null){pet.setCategory(new Category());}
+        if(pet.getTags()==null){pet.setTags(new ArrayList<>());}
         return PetDto.fromEntityToDomain((petRepository.save(PetDto.fromDomainToEntity(pet))));
     }
 

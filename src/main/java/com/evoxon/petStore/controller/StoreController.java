@@ -1,6 +1,7 @@
 package com.evoxon.petStore.controller;
 
 import com.evoxon.petStore.domain.order.Order;
+import com.evoxon.petStore.domain.order.OrderOutput;
 import com.evoxon.petStore.domain.order.OrderServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,20 @@ public class StoreController {
         this.orderServiceImpl = orderServiceImpl;
     }
 
-    @GetMapping(path = "api/v1/store/order", produces = "application/json")
+    /*@GetMapping(path = "api/v1/store/order", produces = "application/json")
     public ResponseEntity<Object> getAllOrders(){
         List<Order> orderList = orderServiceImpl.getAllOrders();
+        if (!orderList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(orderList);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No orders found");
+        }
+    }*/
+
+    @GetMapping(path = "api/v1/store/order", produces = "application/json")
+    public ResponseEntity<Object> getAllOrderOutputs(){
+        List<OrderOutput> orderList = orderServiceImpl.getAllOrderOutputs();
         if (!orderList.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body(orderList);
         }

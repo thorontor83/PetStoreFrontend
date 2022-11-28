@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./components/styles/Global";
 import Orders from "./pages/Orders";
 import  OrdersForm  from "./pages/OrdersForm";
+import OrderOutput from "./pages/OrderOutput";
 
 
 function App() {
@@ -34,10 +35,8 @@ function App() {
   <Route path="/" element={<Home />} />
   <Route path="/pets" element={<PetCatalog/>} />
   <Route path="/pets/register" element={<RegisterPet/>} />
-  <Route path="/upload" element={<UploadPage />} />
-  <Route path="/form" element={<FormPage/>} />
   <Route path="/user" element={<RegisterUser/>} />
-  <Route path="/orders" element={<Orders/>} />
+  <Route path="/orders" element={<OrderOutput/>} />
   <Route path="/orders/register" element={<OrdersForm/>} />
   </Routes>
   </>

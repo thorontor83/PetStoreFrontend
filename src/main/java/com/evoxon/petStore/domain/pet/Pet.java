@@ -7,7 +7,6 @@ import java.util.Objects;
 public class Pet {
     private Long id;
     private String petName;
-
     private String imageSrc;
     private Category category;
     private List<String> tags;
@@ -20,7 +19,8 @@ public class Pet {
         this.id = id;
         this.petName = petName;
         this.imageSrc = imageSrc;
-        this.category = category;
+        if(category==null){this.category=new Category();}
+        else{this.category = category;}
         this.tags = tags;
         this.petStatus = petStatus;
     }

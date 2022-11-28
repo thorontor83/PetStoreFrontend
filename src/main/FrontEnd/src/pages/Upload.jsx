@@ -1,8 +1,22 @@
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import ImageDropZone from '../components/ImageDropZone';
-import { FormLabel, Button } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import axios from "axios";
+import {
+    FormContainer,
+    FormColumn,
+    FormWrapper,
+    FormInput,
+    FormSection,
+    FormRow,
+    FormLabel,
+    FormInputRow,
+    FormMessage,
+    FormButton,
+    FormTitle,
+    DatePickerWrapper,
+} from "../components/styles/OrderInput.styled";
 
 const UPLOAD_URL = "http://localhost:8080/upload";
 
@@ -29,24 +43,6 @@ export default function Upload() {
 
         body = { image: image },
         console.log(image),
-        /*axios({
-            method: "post",
-            url: UPLOAD_URL,
-            data: {"image":data[0]},
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-            .then(function (response) {
-              //handle success
-              console.log(response);
-            })
-            .catch(function (response) {
-              //handle error
-              console.log(response);
-            }))*/
-
-
-
-
         axios.post(UPLOAD_URL, body, customConfig)
             .then(function (response) {
                 console.log(response);
@@ -59,15 +55,12 @@ export default function Upload() {
 
     return (
         <>
-            <h1>Upload Page</h1>
             <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                <fieldset>
-                    <div>
-                        <FormLabel>Upload your image</FormLabel>
-                        <ImageDropZone value={image} onChange={setImage} />
-                        <Button mt={4} colorScheme='teal' type="submit" >Upload</Button>
-                    </div>
-                </fieldset>
+                <FormInputRow>
+                    <FormLabel>Upload pet's image</FormLabel>
+                    <ImageDropZone value={image} onChange={setImage} />
+                    <Button marginBottom={4} mt={4} colorScheme='teal' type="submit" >Upload</Button>
+                </FormInputRow>
             </form>
         </>
     );

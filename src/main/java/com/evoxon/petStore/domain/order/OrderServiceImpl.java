@@ -19,10 +19,12 @@ public class OrderServiceImpl {
 
     final private OrderRepository orderRepository;
     final private PetRepository petRepository;
+    final private OrderDto orderDto;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PetRepository petRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, PetRepository petRepository, OrderDto orderDto) {
         this.orderRepository = orderRepository;
         this.petRepository = petRepository;
+        this.orderDto = orderDto;
     }
 
     public Order createOrder(Order order) throws Exception {
@@ -39,6 +41,13 @@ public class OrderServiceImpl {
         Optional<OrderEntity> optionalOrderEntity = orderRepository.findById(orderId);
         return optionalOrderEntity.map(OrderDto::fromEntityToDomain).orElse(null);
     }
+
+    public Order getOrderOutputById(Long orderId) {
+        Optional<OrderEntity> optionalOrderEntity = orderRepository.findById(orderId);
+        return optionalOrderEntity.map(OrderDto::fromEntityToDomain).orElse(null);
+    }
+
+
 
     public Boolean deleteOrder(Long orderIdToDelete) {
         Optional<OrderEntity> optionalOrderEntity = orderRepository.findById(orderIdToDelete);
@@ -64,5 +73,12 @@ public class OrderServiceImpl {
         List<OrderEntity> entityList = orderRepository.findAll();
         return entityList.stream().map(OrderDto::fromEntityToDomain).collect(Collectors.toList());
     }
+
+    public List<OrderOutput> getAllOrderOutputs() {
+        List<OrderEntity> entityList = orderRepository.findAll();
+        return entityList.stream().map(OrderDto::fromEntityToDomain).map(orderDto::fromDomainToOutput).collect(Collectors.toList());
+    }
+
+
 }
 

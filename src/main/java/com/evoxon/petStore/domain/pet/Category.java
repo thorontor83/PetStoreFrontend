@@ -10,6 +10,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    public Category() {
+        this.id = 99L;
+        this.categoryName = "undefined";
+    }
+
     public Long getId() {
         return id;
     }
