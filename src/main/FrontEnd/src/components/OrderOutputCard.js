@@ -35,7 +35,7 @@ export default function OrderOutputCard({ order: { id, petId, petName, imageSrc,
                 </div>
                 <div>
                     {(imageSrc !== undefined) ?
-                        <img src={require(`../resources/images/${imageSrc}.png`)} alt='' /> : "Image missing"}
+                        <img src={require(`../resources/images/${imageSrc}`)} alt='' /> : "Image missing"}
                 </div>
                 <Spacer />
                 <div>

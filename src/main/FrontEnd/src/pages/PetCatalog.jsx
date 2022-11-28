@@ -55,13 +55,15 @@ export function PetCatalog() {
         <GlobalStyles />
         <LightHeader />
         <Container >
-          <Flex>
-            <Spacer />
+          <Flex>                       
             <PageButton
               page={page} setPage={setPage}
               maxPage={maxPage} setMaxPage={setMaxPage}
             />
             <Spacer />
+            <Link href='/pets/register'>
+            <Button color='black' bg="lightBlue" margintop={"10px"} >Add a new Pet</Button>
+            </Link>
           </Flex>
           {pets.map((pet, index) => (
             <PetCard key={index} pet={pet} />

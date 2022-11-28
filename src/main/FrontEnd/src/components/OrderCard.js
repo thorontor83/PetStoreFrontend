@@ -46,7 +46,7 @@ export default function OrderCard({ order: { id, petId, quantity, shipDate, orde
                 </div>
                 <div>
                     {(pet.imageSrc !== undefined) ?
-                        <img src={require(`../resources/images/${pet.imageSrc}.png`)} alt='' /> : "Image missing"}
+                        <img src={require(`../resources/images/${pet.imageSrc}`)} alt='' /> : "Image missing"}
                 </div>
                 <Spacer />
                 <div>
