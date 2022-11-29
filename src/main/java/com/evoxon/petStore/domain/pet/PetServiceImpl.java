@@ -64,6 +64,12 @@ public class PetServiceImpl implements PetService{
 
     }
 
+    public Page<Pet> getPetsByTagsPaged(int page, String tag) {
+        PageRequest pageRequest = PageRequest.of(page, PAGESIZE, Sort.by("petName"));
+        Page<PetEntity> petEntityList = petRepository.findAllByTagsContaining(pageRequest, tag);
+        return PetDto.fromPageEntityToDomain(petEntityList);
+    }
+
     public List<Pet> getPetsByStatus(PetStatus petStatus) {
         Optional<List<PetEntity>> petEntityList = petRepository.findAllWithStatus(petStatus);
         return petEntityList.map(petEntities -> petEntities.stream().map(PetDto::fromEntityToDomain).collect(Collectors.toList())).orElse(Collections.emptyList());

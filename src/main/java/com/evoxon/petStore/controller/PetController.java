@@ -71,6 +71,20 @@ public class PetController {
         }
     }
 
+    @GetMapping(path = "/api/v1/pet/findByTagsPaged", produces = "application/json")
+    public ResponseEntity<Object> getPetsByTagsPaged(@RequestParam int page, @RequestParam String tag) {
+        if (tag == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("List of tags is not valid");
+        }
+        Page<Pet> petList = petServiceImpl.getPetsByTagsPaged(page, tag);
+        if(petList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pets with required tags");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(petList);
+        }
+    }
+
     @GetMapping(path = "/api/v1/pet/findByStatus", produces = "application/json")
     public ResponseEntity<Object> getPetsByStatus(@RequestBody PetStatusForm petStatus) {
         if (petStatus == null){

@@ -12,6 +12,8 @@ import PageButton from "../components/PageButton";
 
 
 const urlPetCatalog = "http://localhost:8080/api/v1/petpaged?page=";
+const urlPetCatalogByTags = "http://localhost:8080/api/v1/pet/findByTagsPaged?page=";
+
 
 export function PetCatalog() {
 
@@ -28,15 +30,30 @@ export function PetCatalog() {
   const [pet, setPet] = useState();
   const [maxPage, setMaxPage] = useState();
   const [page, setPage] = useState(0);
+  const [filter, setFilter] = useState('');
+
+
+
 
   const fetchPetCatalog = () => {
 
-    axios.get(urlPetCatalog + page).then(res => {
-      console.log(res)
-      const data = res.data
-      setPets(data.content);
-      setMaxPage(data.totalPages)
-    })
+    if (filter == '') {
+      axios.get(urlPetCatalog + page).then(res => {
+        console.log(res)
+        const data = res.data
+        setPets(data.content);
+        setMaxPage(data.totalPages)
+      })
+    }
+    else {
+      axios.get(urlPetCatalogByTags + page + "&tag=" + filter).then(res => {
+        console.log(res)
+        const data = res.data
+        setPets(data.content);
+        setMaxPage(data.totalPages)
+      })
+
+    }
   }
 
   const onChangePage = (next) => {
@@ -49,24 +66,34 @@ export function PetCatalog() {
     fetchPetCatalog();
   }, [page])
 
+  useEffect(() => {
+    setPage(0);
+    fetchPetCatalog();
+  }, [filter])
+
+
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
         <LightHeader />
         <Container >
-          <Flex>                       
+          <Flex>
             <PageButton
               page={page} setPage={setPage}
               maxPage={maxPage} setMaxPage={setMaxPage}
             />
             <Spacer />
+            <button type={'button'} bg="blue" color='black' height={"25px"} bg="lightGreen" margintop={"10px"} onClick={()=>setFilter('')}>
+              {"Filter by: "}{filter}
+            </button>
+            <Spacer />
             <Link href='/pets/register'>
-            <Button color='black' bg="lightBlue" margintop={"10px"} >Add a new Pet</Button>
+              <Button color='black' bg="lightBlue" margintop={"10px"} >Add a new Pet</Button>
             </Link>
           </Flex>
           {pets.map((pet, index) => (
-            <PetCard key={index} pet={pet} />
+            <PetCard key={index} pet={pet} filter={filter} setFilter={setFilter} />
           ))}
           <Flex>
             <Spacer />
