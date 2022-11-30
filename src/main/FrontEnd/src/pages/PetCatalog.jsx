@@ -9,6 +9,7 @@ import GlobalStyles from "../components/styles/Global";
 import PetCard from '../components/PetCard';
 import { Container } from "../components/styles/Container.styled";
 import PageButton from "../components/PageButton";
+import { FilterButton } from '../components/styles/FilterButton.styled';
 
 
 const urlPetCatalog = "http://localhost:8080/api/v1/petpaged?page=";
@@ -31,6 +32,11 @@ export function PetCatalog() {
   const [maxPage, setMaxPage] = useState();
   const [page, setPage] = useState(0);
   const [filter, setFilter] = useState('');
+  const [tooltip, setTooltip] = useState(false);
+
+  const toogleTooltip = () => {
+    setTooltip(!tooltip);
+  }
 
 
 
@@ -84,13 +90,21 @@ export function PetCatalog() {
               maxPage={maxPage} setMaxPage={setMaxPage}
             />
             <Spacer />
-            <button type={'button'} bg="blue" color='black' height={"25px"} bg="lightGreen" margintop={"10px"} onClick={()=>setFilter('')}>
-              {"Filter by: "}{filter}
-            </button>
+            <Flex  onMouseEnter={toogleTooltip} onMouseLeave={toogleTooltip} onClick={() => setFilter('')} 
+            width={"300px"} alignSelf={'center'} textAlign={"center"} alignItems={"center"}   borderRadius={"50px"}>
+              <FilterButton color='black' bg="lightGreen"  >
+                {"Filter by: "}{filter}
+              </FilterButton>
+            </Flex>
             <Spacer />
             <Link href='/pets/register'>
               <Button color='black' bg="lightBlue" margintop={"10px"} >Add a new Pet</Button>
             </Link>
+          </Flex>
+          <Flex alignContent={'center'} align={'center'} textAlign={"center"}>
+            <Spacer />
+            <Text marginLeft={'155px'} fontSize={'22px'} style={{visibility: tooltip?'visible':'hidden'}} >{"Click to erase the filter"}</Text>
+            <Spacer />
           </Flex>
           {pets.map((pet, index) => (
             <PetCard key={index} pet={pet} filter={filter} setFilter={setFilter} />
