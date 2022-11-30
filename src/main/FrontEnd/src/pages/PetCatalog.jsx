@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Box, Flex, Text, Heading, Link, Spacer, List } from "@chakra-ui/react";
+import { Image, Box, Text, Heading, Link, Spacer, List } from "@chakra-ui/react";
 import { Button } from "../components/styles/Button.styled";
 import axios from "axios";
 import LightHeader from "../components/LightHeader";
@@ -10,6 +10,7 @@ import PetCard from '../components/PetCard';
 import { Container } from "../components/styles/Container.styled";
 import PageButton from "../components/PageButton";
 import { FilterButton } from '../components/styles/FilterButton.styled';
+import { Flex } from '../components/styles/Flex.styled';
 
 
 const urlPetCatalog = "http://localhost:8080/api/v1/petpaged?page=";
@@ -91,7 +92,7 @@ export function PetCatalog() {
             />
             <Spacer />
             <Flex  onMouseEnter={toogleTooltip} onMouseLeave={toogleTooltip} onClick={() => setFilter('')} 
-            width={"300px"} alignSelf={'center'} textAlign={"center"} alignItems={"center"}   borderRadius={"50px"}>
+                 borderRadius={"50px"}>
               <FilterButton color='black' bg="lightGreen"  >
                 {"Filter by: "}{filter}
               </FilterButton>
